@@ -78,4 +78,15 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+    config.action_mailer.smtp_settings = {
+    :address        => Rails.application.secrets.smtp_address,
+    :port           => Rails.application.secrets.smtp_port,
+    :authentication => :login,
+    :user_name      => Rails.application.secrets.smtp_username,
+    :password       => Rails.application.secrets.smtp_password,
+    :domain         => Rails.application.secrets.smtp_domain,
+    :enable_starttls_auto => Rails.application.secrets.smtp_starttls_auto,
+    :openssl_verify_mode => 'none'
+  }
 end
