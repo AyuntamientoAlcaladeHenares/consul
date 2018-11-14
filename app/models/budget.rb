@@ -124,7 +124,7 @@ class Budget < ActiveRecord::Base
   def formatted_amount(amount)
     ActionController::Base.helpers.number_to_currency(amount,
                                                       precision: 0,
-                                                      locale: I18n.default_locale,
+                                                      locale: I18n.locale,
                                                       unit: currency_symbol)
   end
 
@@ -157,6 +157,10 @@ class Budget < ActiveRecord::Base
     investments.unselected.each do |investment|
       Mailer.budget_investment_unselected(investment).deliver_later
     end
+  end
+
+  def has_winning_investments?
+    investments.winners.any?
   end
 
   private

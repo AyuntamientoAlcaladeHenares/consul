@@ -41,7 +41,6 @@ gem 'redcarpet', '~> 3.4.0'
 gem 'responders', '~> 2.4.0'
 gem 'rinku', '~> 2.0.2', require: 'rails_rinku'
 gem 'rollbar', '~> 2.15.5'
-gem 'rubyzip', '~> 1.2.0'
 gem 'sass-rails', '~> 5.0', '>= 5.0.4'
 gem 'savon', '~> 2.11.1'
 gem 'sitemap_generator', '~> 6.0.1'
@@ -52,6 +51,8 @@ gem 'turnout', '~> 2.4.0'
 gem 'uglifier', '~> 4.1.2'
 gem 'unicorn', '~> 5.4.0'
 gem 'whenever', '~> 0.10.0', require: false
+gem 'globalize', '~> 5.0.0'
+gem 'globalize-accessors', '~> 0.2.1'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-leaflet'
@@ -60,7 +61,7 @@ end
 
 group :development, :test do
   gem 'bullet', '~> 5.7.0'
-  gem 'byebug', '~> 9.1.0'
+  gem 'byebug', '~> 10.0.0'
   gem 'factory_bot_rails', '~> 4.8.2'
   gem 'faker', '~> 1.8.7'
   gem 'i18n-tasks', '~> 0.9.20'
@@ -77,8 +78,8 @@ group :test do
   gem 'coveralls', '~> 0.8.21', require: false
   gem 'database_cleaner', '~> 1.6.1'
   gem 'email_spec', '~> 2.1.0'
-  gem 'poltergeist', '~> 1.17.0'
   gem 'rspec-rails', '~> 3.6'
+  gem 'selenium-webdriver', '~> 3.10'
 end
 
 group :development do
@@ -87,8 +88,8 @@ group :development do
   gem 'capistrano-rails', '~> 1.3.1', require: false
   gem 'capistrano3-delayed-job', '~> 1.7.3'
   gem 'mdl', '~> 0.4.0', require: false
-  gem 'rubocop', '~> 0.52.1', require: false
-  gem 'rubocop-rspec', '~> 1.22.1', require: false
+  gem 'rubocop', '~> 0.54.0', require: false
+  gem 'rubocop-rspec', '~> 1.24.0', require: false
   gem 'rvm1-capistrano3', '~> 1.4.0', require: false
   gem 'scss_lint', '~> 0.54.0', require: false
   gem 'web-console', '~> 3.3.0'

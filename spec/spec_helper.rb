@@ -42,6 +42,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     I18n.locale = :en
     load Rails.root.join('db', 'seeds.rb').to_s
+    Setting["feature.user.skip_verification"] = nil
   end
 
   config.before(:each, type: :feature) do
@@ -55,6 +56,10 @@ RSpec.configure do |config|
       # specs, so use truncation strategy.
       DatabaseCleaner.strategy = :truncation
     end
+  end
+
+  config.before(:each, type: :feature) do
+    Capybara.reset_sessions!
   end
 
   config.before do
@@ -92,7 +97,7 @@ RSpec.configure do |config|
   # Print the 10 slowest examples and example groups at the
   # end of the spec run, to help surface which specs are running
   # particularly slow.
-  config.profile_examples = 10
+  # config.profile_examples = 10
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing

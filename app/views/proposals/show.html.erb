@@ -16,7 +16,7 @@
   <div class="proposal-show">
     <div id="<%= dom_id(@proposal) %>" class="row">
       <div class="small-12 medium-9 column">
-        <%= back_link_to %>
+        <%= back_link_to proposals_path %>
 
         <h1><%= @proposal.title %></h1>
         <% if @proposal.retired? %>
@@ -106,6 +106,12 @@
           </div>
         <% end %>
 
+        <% if feature?(:allow_attached_documents) %>
+          <%= render 'documents/documents',
+                      documents: @proposal.documents,
+                      max_documents_allowed: Proposal.max_documents_allowed %>
+        <% end %>
+
         <%= render 'shared/tags', taggable: @proposal %>
 
         <%= render 'shared/geozone', geozonable: @proposal %>
@@ -182,7 +188,8 @@
         <%= render partial: 'shared/social_share', locals: {
           share_title: t("proposals.show.share"),
           title: @proposal.title,
-          url: proposal_url(@proposal)
+          url: proposal_url(@proposal),
+          description: @proposal.summary
         } %>
 
         <% if current_user %>
@@ -205,11 +212,5 @@
 
   <div class="tabs-panel is-active" id="tab-comments">
     <%= render "proposals/comments" %>
-  </div>
-
-  <div class="tabs-panel" id="tab-documents">
-    <%= render 'documents/documents',
-                documents: @proposal.documents,
-                max_documents_allowed: Proposal.max_documents_allowed %>
   </div>
 </div>
