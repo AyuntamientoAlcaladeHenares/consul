@@ -87,6 +87,7 @@ gl:
         table_edit_budget: Editar
         edit_groups: Editar grupos de partidas
         edit_budget: Editar orzamento
+        no_budgets: "Non hai orzamentos abertas."
       create:
         notice: Nova campaña de orzamentos participativos creada con éxito!
       update:
@@ -569,7 +570,6 @@ gl:
           layouts: "Capas"
           mailers: "Correos electrónicos"
           management: "Xestión"
-          guides: "Guías"
           welcome: "Benvida"
         buttons:
           save: "Gardar"
@@ -641,6 +641,9 @@ gl:
         title: Vista previa do boletín informativo
         send: Enviar
         affected_users: (%{n} usuarios afectados)
+        sent_emails:
+          one: 1 mensaxe enviada
+          other: "%{count} mensaxes enviadas"
         sent_at: Enviado a
         subject: Asunto
         segment_recipient: Destinatarios
