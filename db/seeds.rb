@@ -82,6 +82,8 @@ Setting['feature.budgets'] = true
 Setting['feature.signature_sheets'] = true
 Setting['feature.legislation'] = true
 Setting['feature.user.recommendations'] = true
+Setting['feature.user.recommendations_on_debates'] = true
+Setting['feature.user.recommendations_on_proposals'] = true
 Setting['feature.community'] = true
 Setting['feature.map'] = nil
 Setting['feature.allow_images'] = true
@@ -125,3 +127,8 @@ Setting['map_zoom'] = 10
 Setting['related_content_score_threshold'] = -0.3
 
 Setting["feature.user.skip_verification"] = 'true'
+
+Setting['feature.homepage.widgets.feeds.proposals'] = true
+Setting['feature.homepage.widgets.feeds.debates'] = true
+Setting['feature.homepage.widgets.feeds.processes'] = true
+
