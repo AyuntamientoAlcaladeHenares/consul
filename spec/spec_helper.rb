@@ -1,8 +1,9 @@
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'database_cleaner'
 require 'email_spec'
 require 'devise'
-require 'knapsack'
+require 'knapsack_pro'
+
 Dir["./spec/models/concerns/*.rb"].each { |f| require f }
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 Dir["./spec/shared/**/*.rb"].sort.each { |f| require f }
@@ -13,7 +14,7 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
   config.include Devise::TestHelpers, type: :controller
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
   config.include(CommonActions)
@@ -37,7 +38,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do |example|
+  config.before do |example|
     DatabaseCleaner.strategy = :transaction
     I18n.locale = :en
     load Rails.root.join('db', 'seeds.rb').to_s
@@ -56,11 +57,11 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.append_after(:each) do
+  config.append_after do
     DatabaseCleaner.clean
   end
 
@@ -104,7 +105,9 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  config.expect_with(:rspec) { |c| c.syntax = :expect }
 end
 
 # Parallel build helper configuration for travis
-Knapsack::Adapters::RSpecAdapter.bind
+KnapsackPro::Adapters::RSpecAdapter.bind
