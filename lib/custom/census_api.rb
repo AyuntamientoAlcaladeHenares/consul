@@ -34,31 +34,33 @@ class CensusApi
     end
 
     def valid?
-      data[:nif].present?
+      data["nif"].present?
     end
 
     def date_of_birth
-      data[:fecha_nacimiento]
+      data["fecha_nacimiento"]
     end
 
     def postal_code
-      data[:codigo_postal]
+      data["codigo_postal"]
     end
 
     def district_code
-      '1'
+      data["distrito"]
     end
 
     def gender
-      data[:sexo] == "H" ? 'male' : 'female'
+      data["sexo"] == "VARÓN" ? "male" : "female"
     end
 
     private
 
     def data
       @data ||= begin
-                  if @body[:get_ciudadano_response]
-                    @body[:get_ciudadano_response]
+                  if @body["code"] && @body["code"] == 404
+                    {}
+                  else
+                    @body
                   end
                 end
     end
@@ -66,20 +68,24 @@ class CensusApi
 
   private
 
-  def get_response_body(document_type, document_number)
+  def get_response_body(_, document_number)
     if end_point_available?
-      client.call(:get_ciudadano, message: request(document_type, document_number)).body
+      document_response(document_number)
     else
       stubbed_response_body
     end
   end
 
-  def client
-    @client = Savon.client(wsdl: Rails.application.secrets.census_api_end_point)
+  def document_response(document_number)
+    url = request_url(document_number)
+
+    request = Net::HTTP::Get.new(url.to_s)
+    response = Net::HTTP.start(url.host, url.port) { |http| http.request(request) }
+    JSON.parse response.body
   end
 
-  def request(document_type, document_number)
-    { nif: document_number }
+  def request_url(document_number)
+    URI.join(Rails.application.secrets.census_api_end_point, document_number)
   end
 
   def end_point_available?
@@ -87,7 +93,7 @@ class CensusApi
   end
 
   def stubbed_response_body
-    {:get_ciudadano_response=>{:apellido1=>nil, :apellido2=>nil, :codigo_postal=>nil, :fecha_nacimiento=>nil, :nif=>nil, :nombre=>nil, :sexo=>nil}, :@xmlns=>"http://schemas.xmlsoap.org/wsdl/"}
+    { "nif" => nil, "nombre" => nil, "part_ape1" => nil, "apellido1" => nil, "part_ape2" => nil, "apellido2" => nil, "apellidos_nombre" => nil, "sexo" => nil, "fecha_nacimiento" => nil, "distrito" => nil, "codigo_postal" => nil }
   end
 
   def is_dni?(document_type)
