@@ -50,6 +50,8 @@ class CensusApi
     end
 
     def gender
+      return unless valid?
+
       data["sexo"] == "VARÓN" ? "male" : "female"
     end
 
