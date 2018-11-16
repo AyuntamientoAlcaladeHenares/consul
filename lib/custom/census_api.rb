@@ -38,7 +38,11 @@ class CensusApi
     end
 
     def date_of_birth
-      data["fecha_nacimiento"]
+      return unless data["fecha_nacimiento"].present?
+
+      Date.parse(data["fecha_nacimiento"])
+    rescue ArgumentError
+      nil
     end
 
     def postal_code
