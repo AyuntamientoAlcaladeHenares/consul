@@ -47,17 +47,32 @@ feature 'Legislation' do
       end
     end
 
-    scenario 'Key dates are displayed on current locale' do
+    scenario 'Participation phases are displayed only if there is a phase enabled' do
+      process = create(:legislation_process, :empty)
+      process_debate = create(:legislation_process)
+
+      visit legislation_process_path(process)
+
+      expect(page).not_to have_content("Participation phases")
+
+      visit legislation_process_path(process_debate)
+
+      expect(page).to have_content("Participation phases")
+    end
+
+    scenario 'Participation phases are displayed on current locale' do
       process = create(:legislation_process, proposals_phase_start_date: Date.new(2018, 01, 01),
                                              proposals_phase_end_date: Date.new(2018, 12, 01))
 
       visit legislation_process_path(process)
 
+      expect(page).to have_content("Participation phases")
       expect(page).to have_content("Proposals")
       expect(page).to have_content("01 Jan 2018 - 01 Dec 2018")
 
       visit legislation_process_path(process, locale: "es")
 
+      expect(page).to have_content("Fases de participación")
       expect(page).to have_content("Propuestas")
       expect(page).to have_content("01 ene 2018 - 01 dic 2018")
     end
@@ -134,12 +149,45 @@ feature 'Legislation' do
     context "show" do
       include_examples "not published permissions", :legislation_process_path
 
-      scenario '#show view has document present' do
+      scenario 'show view has document present on all phases' do
         process = create(:legislation_process)
         document = create(:document, documentable: process)
+        phases = ["Debate", "Proposals", "Comments"]
+
         visit legislation_process_path(process)
 
-        expect(page).to have_content(document.title)
+        phases.each do |phase|
+          within(".legislation-process-list") do
+            find('li', :text => "#{phase}").click_link
+          end
+
+          expect(page).to have_content(document.title)
+        end
+      end
+
+      scenario 'show draft publication and final result publication dates' do
+        process = create(:legislation_process, draft_publication_date: Date.new(2019, 01, 10),
+                                               result_publication_date: Date.new(2019, 01, 20))
+
+        visit legislation_process_path(process)
+
+        within("aside") do
+          expect(page).to have_content("Draft publication")
+          expect(page).to have_content("10 Jan 2019")
+          expect(page).to have_content("Final result publication")
+          expect(page).to have_content("20 Jan 2019")
+        end
+      end
+
+      scenario 'do not show draft publication and final result publication dates if are empty' do
+        process = create(:legislation_process, :empty)
+
+        visit legislation_process_path(process)
+
+        within("aside") do
+          expect(page).not_to have_content("Draft publication")
+          expect(page).not_to have_content("Final result publication")
+        end
       end
 
       scenario 'show additional info button' do
@@ -177,6 +225,10 @@ feature 'Legislation' do
 
         visit legislation_process_path(process)
 
+        within(".key-dates") do
+          expect(page).to have_content("Homepage")
+        end
+
         expect(page).to     have_content("This is the process homepage")
         expect(page).not_to have_content("Participate in the debate")
       end
@@ -188,6 +240,10 @@ feature 'Legislation' do
                                                debate_end_date: Date.current + 2.days)
 
         visit legislation_process_path(process)
+
+        within(".key-dates") do
+          expect(page).not_to have_content("Homepage")
+        end
 
         expect(page).to have_content("This phase is not open yet")
         expect(page).not_to have_content("This is the process homepage")

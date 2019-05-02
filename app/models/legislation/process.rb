@@ -18,8 +18,8 @@ class Legislation::Process < ActiveRecord::Base
   translates :homepage,           touch: true
   include Globalizable
 
-  PHASES_AND_PUBLICATIONS = %i[draft_phase debate_phase allegations_phase proposals_phase
-                               draft_publication result_publication].freeze
+  PHASES_AND_PUBLICATIONS = %i[homepage_phase draft_phase debate_phase allegations_phase
+                               proposals_phase draft_publication result_publication].freeze
 
   has_many :draft_versions, -> { order(:id) }, class_name: 'Legislation::DraftVersion',
                                                foreign_key: 'legislation_process_id',
@@ -54,6 +54,10 @@ class Legislation::Process < ActiveRecord::Base
                                    draft_end_date IS NOT NULL and (draft_start_date > ? or
                                    draft_end_date < ?))", Date.current, Date.current) }
 
+  def homepage_phase
+    Legislation::Process::Phase.new(start_date, end_date, homepage_enabled)
+  end
+
   def draft_phase
     Legislation::Process::Phase.new(draft_start_date, draft_end_date, draft_phase_enabled)
   end
@@ -78,6 +82,10 @@ class Legislation::Process < ActiveRecord::Base
 
   def result_publication
     Legislation::Process::Publication.new(result_publication_date, result_publication_enabled)
+  end
+
+  def enabled_phases?
+    PHASES_AND_PUBLICATIONS.any? { |process| send(process).enabled? }
   end
 
   def enabled_phases_and_publications_count
