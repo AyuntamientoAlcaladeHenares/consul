@@ -1,0 +1,11 @@
+es:
+  verification:
+    letter:
+      create:
+        flash:
+          success_html: Antes de las votaciones recibirás una carta con las instrucciones para verificar tu cuenta.<br> Recuerda que puedes ahorrar el envío verificándote presencialmente en en la <a href="http://www.ayto-alcaladehenares.es/portalAlcala/contenedor3.jsp?seccion=s_floc_d4_v1.jsp&contenido=977&tipo=1&nivel=1400&layout=contenedor3.jsp&codResi=1&language=es&codResi=1&language=es">Oficina de Atención Ciudadana</a> o las <a href="http://www.ayto-alcaladehenares.es/portalAlcala/contenedor1.jsp?seccion=s_lloc_d10_v1.jsp&codbusqueda=167&language=es&codResi=1&codMenuPN=1&codMenu=20&layout=contenedor1.jsp&codigoArea=3&layout=contenedor1.jsp">Juntas Municipales de Distrito</a>.
+      new:
+        office: Verificarte presencialmente en la <a href="http://www.ayto-alcaladehenares.es/portalAlcala/contenedor3.jsp?seccion=s_floc_d4_v1.jsp&contenido=977&tipo=1&nivel=1400&layout=contenedor3.jsp&codResi=1&language=es&codResi=1&language=es">Oficina de Atención Ciudadana</a> o las <a href="http://www.ayto-alcaladehenares.es/portalAlcala/contenedor1.jsp?seccion=s_lloc_d10_v1.jsp&codbusqueda=167&language=es&codResi=1&codMenuPN=1&codMenu=20&layout=contenedor1.jsp&codigoArea=3&layout=contenedor1.jsp">Juntas Municipales de Distrito</a>
+    residence:
+      new:
+        error_verifying_census: El Padrón no pudo verificar tu información. Por favor, confirma que tus datos de empadronamiento sean correctos llamando a la <a href="http://www.ayto-alcaladehenares.es/portalAlcala/contenedor3.jsp?seccion=s_floc_d4_v1.jsp&contenido=977&tipo=1&nivel=1400&layout=contenedor3.jsp&codResi=1&language=es&codResi=1&language=es">Oficina de Atención Ciudadana</a> o las <a href="http://www.ayto-alcaladehenares.es/portalAlcala/contenedor1.jsp?seccion=s_lloc_d10_v1.jsp&codbusqueda=167&language=es&codResi=1&codMenuPN=1&codMenu=20&layout=contenedor1.jsp&codigoArea=3&layout=contenedor1.jsp">Juntas Municipales de Distrito</a>.
