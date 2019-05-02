@@ -38,15 +38,22 @@
 
       <%= link_to t("verification.letter.new.go_to_index"), root_path, class: "button warning" %>
     </div>
-    <div class="small-12 medium-8 column final-votes-info" style="display: flex">
+    <div class="small-12 medium-8 column final-votes-info">
 
-      <span class="icon-box" style="margin-right: 20px"></span>
+      <span class="icon-box"></span>
 
-      <p style="margin-top: 6px">
-        Para participar en las votaciones finales debes <strong>verificarte presencialmente</strong> en la
-        <%= link_to "Oficina de Atención Ciudadana", "http://www.ayto-alcaladehenares.es/portalAlcala/contenedor3.jsp?seccion=s_floc_d4_v1.jsp&contenido=977&tipo=1&nivel=1400&layout=contenedor3.jsp&codResi=1&language=es&codResi=1&language=es" %>
-        o las <%= link_to "Juntas Municipales de Distrito", "http://www.ayto-alcaladehenares.es/portalAlcala/contenedor1.jsp?seccion=s_lloc_d10_v1.jsp&codbusqueda=167&language=es&codResi=1&codMenuPN=1&codMenu=20&layout=contenedor1.jsp&codigoArea=3&layout=contenedor1.jsp" %>.
-      </p>
+      <p><strong><%= t("verification.letter.new.explanation") %></strong></p>
+
+      <ul>
+        <li>
+          <%= t("verification.letter.new.office",
+          office: link_to(t("verification.letter.new.offices"), setting['verification_offices_url'],
+          target: "blank")).html_safe %>
+        </li>
+        <li>
+          <%= link_to t("verification.letter.new.send_letter"), letter_path, method: :post %>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
