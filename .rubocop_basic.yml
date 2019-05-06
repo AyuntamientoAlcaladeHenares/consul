@@ -18,6 +18,9 @@ AllCops:
 Layout/IndentationConsistency:
   EnforcedStyle: rails
 
+Layout/IndentationWidth:
+  Enabled: true
+
 Layout/EndOfLine:
   EnforcedStyle: lf
 
@@ -26,3 +29,18 @@ Layout/TrailingBlankLines:
 
 Layout/TrailingWhitespace:
   Enabled: true
+
+Lint/LiteralAsCondition:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 100
+
+RSpec/NotToNot:
+  Enabled: true
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

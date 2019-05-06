@@ -1,12 +1,12 @@
-require 'factory_bot_rails'
-require 'database_cleaner'
-require 'email_spec'
-require 'devise'
-require 'knapsack_pro'
+require "factory_bot_rails"
+require "database_cleaner"
+require "email_spec"
+require "devise"
+require "knapsack_pro"
 
 Dir["./spec/models/concerns/*.rb"].each { |f| require f }
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
-Dir["./spec/shared/**/*.rb"].sort.each { |f| require f }
+Dir["./spec/shared/**/*.rb"].sort.each  { |f| require f }
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
@@ -19,6 +19,7 @@ RSpec.configure do |config|
   config.include(EmailSpec::Matchers)
   config.include(CommonActions)
   config.include(ActiveSupport::Testing::TimeHelpers)
+
   config.before(:suite) do
     DatabaseCleaner.clean_with :truncation
   end
@@ -43,7 +44,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     I18n.locale = :en
     Globalize.locale = I18n.locale
-    load Rails.root.join('db', 'seeds.rb').to_s
+    load Rails.root.join("db", "seeds.rb").to_s
     Setting["feature.user.skip_verification"] = nil
   end
 
@@ -60,8 +61,8 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:each, type: :feature) do
-    Capybara.reset_sessions!
+  config.after(:each, :page_driver) do
+    page.driver.reset!
   end
 
   config.before do
@@ -112,7 +113,7 @@ RSpec.configure do |config|
     # Use the documentation formatter for detailed output,
     # unless a formatter has already been configured
     # (e.g. via a command-line flag).
-    config.default_formatter = 'doc'
+    config.default_formatter = "doc"
   end
 
   # Print the 10 slowest examples and example groups at the
