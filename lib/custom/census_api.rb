@@ -86,6 +86,9 @@ class CensusApi
     url = request_url(document_number)
 
     request = Net::HTTP::Get.new(url.to_s)
+
+    Rails.logger.debug("Making census request to #{url.host}:#{url.port}")
+
     response = Net::HTTP.start(url.host, url.port) { |http| http.request(request) }
     JSON.parse response.body
   end
